@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Node (sharp optimization scripts)
+node_modules/
+package-lock.json
+
+# Source footage (unoptimized originals — not needed for deployment)
+visual-assets/homepage/video-source/
+
+# Build/archive folders
+_archive/
+_BACKUP/
