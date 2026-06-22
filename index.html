@@ -3669,7 +3669,17 @@ function showCopyTick() {
 }
 
 document.getElementById('fa-email-value').addEventListener('click', () => {
-  navigator.clipboard.writeText('rolandpaczo@gmail.com').catch(() => {});
+  try {
+    navigator.clipboard.writeText('rolandpaczo@gmail.com').catch(() => {});
+  } catch (_) {
+    const t = document.createElement('textarea');
+    t.value = 'rolandpaczo@gmail.com';
+    t.style.cssText = 'position:fixed;opacity:0';
+    document.body.appendChild(t);
+    t.select();
+    document.execCommand('copy');
+    t.remove();
+  }
   showCopyTick();
 });
 
@@ -3705,7 +3715,17 @@ if (window.ResizeObserver && faBoxEl) {
 
 document.getElementById('fa-email-label').addEventListener('click', () => {
   if (!faContactEl.classList.contains('collapsed')) return;
-  navigator.clipboard.writeText('rolandpaczo@gmail.com').catch(() => {});
+  try {
+    navigator.clipboard.writeText('rolandpaczo@gmail.com').catch(() => {});
+  } catch (_) {
+    const t = document.createElement('textarea');
+    t.value = 'rolandpaczo@gmail.com';
+    t.style.cssText = 'position:fixed;opacity:0';
+    document.body.appendChild(t);
+    t.select();
+    document.execCommand('copy');
+    t.remove();
+  }
   showCopyTick();
 });
 
