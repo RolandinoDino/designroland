@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infinite Parallax Scroll with Minimap</title>
+    <title>Roland Paczolay Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -3656,32 +3656,38 @@ document.getElementById('detail-contact').addEventListener('click', () => {
   requestAnimationFrame(step);
 });
 
-function showCopyTick() {
-  const tick = document.getElementById('fa-copy-tick');
+function copyEmail() {
+  const email = 'rolandpaczo@gmail.com';
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(email).catch(function() {
+      fallbackCopy(email);
+    });
+  } else {
+    fallbackCopy(email);
+  }
+  var tick = document.getElementById('fa-copy-tick');
   if (!tick) return;
   clearTimeout(tick._timer);
   tick.style.transition = 'opacity 0.2s ease';
   tick.style.opacity = '1';
-  tick._timer = setTimeout(() => {
+  tick._timer = setTimeout(function() {
     tick.style.transition = 'opacity 0.4s ease';
     tick.style.opacity = '0';
   }, 1200);
 }
 
-document.getElementById('fa-email-value').addEventListener('click', () => {
-  try {
-    navigator.clipboard.writeText('rolandpaczo@gmail.com').catch(() => {});
-  } catch (_) {
-    const t = document.createElement('textarea');
-    t.value = 'rolandpaczo@gmail.com';
-    t.style.cssText = 'position:fixed;opacity:0';
-    document.body.appendChild(t);
-    t.select();
-    document.execCommand('copy');
-    t.remove();
-  }
-  showCopyTick();
-});
+function fallbackCopy(text) {
+  var t = document.createElement('textarea');
+  t.value = text;
+  t.style.cssText = 'position:fixed;left:-9999px;opacity:0';
+  document.body.appendChild(t);
+  t.focus();
+  t.select();
+  document.execCommand('copy');
+  t.remove();
+}
+
+document.getElementById('fa-email-value').addEventListener('click', copyEmail);
 
 // ── Collapse contact lines when box is too narrow for full text ──
 const faContactEl = document.querySelector('.fa-contact');
@@ -3713,20 +3719,9 @@ if (window.ResizeObserver && faBoxEl) {
   new ResizeObserver(checkFaCollapse).observe(faBoxEl);
 }
 
-document.getElementById('fa-email-label').addEventListener('click', () => {
+document.getElementById('fa-email-label').addEventListener('click', function() {
   if (!faContactEl.classList.contains('collapsed')) return;
-  try {
-    navigator.clipboard.writeText('rolandpaczo@gmail.com').catch(() => {});
-  } catch (_) {
-    const t = document.createElement('textarea');
-    t.value = 'rolandpaczo@gmail.com';
-    t.style.cssText = 'position:fixed;opacity:0';
-    document.body.appendChild(t);
-    t.select();
-    document.execCommand('copy');
-    t.remove();
-  }
-  showCopyTick();
+  copyEmail();
 });
 
 document.getElementById('fa-linkedin-label').addEventListener('click', () => {
