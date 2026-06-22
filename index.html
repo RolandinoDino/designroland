@@ -341,6 +341,23 @@ p {
   opacity: 0;
   transition: opacity 0.2s ease;
 }
+#page-loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 28px;
+  border: 3px solid transparent;
+  border-top-color: #2b67fd;
+  border-radius: 50%;
+  animation: page-loader-spin 0.7s linear infinite;
+  z-index: 201;
+  transition: opacity 0.2s ease;
+}
+@keyframes page-loader-spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
 
 
 /* ── PROJECT DETAIL PAGE ── */
@@ -1078,6 +1095,7 @@ p {
 </div>
     <div class="home" id="home">
       <div id="home-intro-overlay">
+        <div id="page-loader"></div>
         <svg style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none" xmlns="http://www.w3.org/2000/svg">
           <text id="ov-r"     y="50%" dominant-baseline="middle" text-anchor="start" font-family="Gotfather, sans-serif" font-size="300" fill="#2b67fd">R</text>
           <text id="ov-oland" y="50%" dominant-baseline="middle" text-anchor="start" font-family="Gotfather, sans-serif" font-size="300" letter-spacing="-3.52" fill="#2b67fd">oland</text>
@@ -2399,6 +2417,8 @@ function animateIntroTexts() {
 }
 
 document.fonts.ready.then(() => {
+  var loader = document.getElementById('page-loader');
+  if (loader) { loader.style.opacity = '0'; setTimeout(function() { loader.remove(); }, 200); }
   scaleHomepageText();
   positionRolandSplit();
   sizeLetsChatText();
