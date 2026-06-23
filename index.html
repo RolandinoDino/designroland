@@ -81,6 +81,13 @@ img {
   height: 100%;
   object-fit: cover;
 }
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+img[loading="lazy"].img-loaded {
+  opacity: 1;
+}
 
 p {
   text-transform: uppercase;
@@ -1622,6 +1629,12 @@ p {
     </div>
 
     <script>
+document.addEventListener('load', function(e) {
+  if (e.target.tagName === 'IMG' && e.target.getAttribute('loading') === 'lazy') {
+    e.target.classList.add('img-loaded');
+  }
+}, true);
+
 const projectData = [
   {
     title: "BloomLabs",
@@ -1721,7 +1734,7 @@ const createElement = (index, type) => {
   if (type === "main") {
     const el = document.createElement("div");
     el.className = "project";
-    el.innerHTML = `<img src="${data.image}" alt="${data.title}" />`;
+    el.innerHTML = `<img src="${data.image}" alt="${data.title}" style="opacity:0;transition:opacity 0.5s ease" onload="this.style.opacity='1'" />`;
     document.querySelector(".project-list").appendChild(el);
     state.projects.set(index, {
       el,
@@ -1730,7 +1743,7 @@ const createElement = (index, type) => {
   } else if (type === "minimap") {
     const el = document.createElement("div");
     el.className = "minimap-img-item";
-    el.innerHTML = `<img src="${data.thumb || data.image}" alt="${data.title}" />`;
+    el.innerHTML = `<img src="${data.thumb || data.image}" alt="${data.title}" style="opacity:0;transition:opacity 0.5s ease" onload="this.style.opacity='1'" />`;
     document.querySelector(".minimap-img-preview").appendChild(el);
     state.minimap.set(index, {
       el,
